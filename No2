@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, CheckBox, Image } from 'react-native';
+
+const Screen_02 = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [agree, setAgree] = useState(false); // State for checkbox
+
+  const [users, setUsers] = useState([]); // Array to hold user data
+
+  const handleContinue = () => {
+    if (agree) {
+      // Save the entered user data into the users array
+      setUsers([...users, { username, email, password }]);
+
+      // Navigate to Screen_03
+      navigation.navigate('Screen_03');
+    } else {
+      alert("Please agree to the Terms & Conditions");
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Back Button */}
+      <View style={styles.backButton}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.backText}>{"<"}</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Add Image19 */}
+      <Image source={require('../assets/DATA/Image19.png')} style={styles.logo} />
+
+      <Text style={styles.title}>Nice to see you!</Text>
+      <Text style={styles.subtitle}>Create your account</Text>
+      
+      <TextInput
+        placeholder="Enter your user name"
+        style={styles.input}
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        placeholder="Enter your email address"
+        style={styles.input}
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        placeholder="Enter your password"
+        style={styles.input}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
+      {/* I agree with Terms & Conditions */}
+      <View style={styles.checkboxContainer}>
+        <CheckBox value={agree} onValueChange={setAgree} style={styles.checkbox} />
+        <Text style={styles.agreeText}>I agree with</Text>
+        <TouchableOpacity>
+          <Text style={styles.termsText}> Terms & Conditions</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleContinue}>
+        <Text style={styles.buttonText}>Continue</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+  },
+  backText: {
+    fontSize: 18,
+    color: '#333',
+  },
+  logo: {
+    width: 80,
+    height: 80, // You can adjust the size of Image19 here
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    marginBottom: 15,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  checkbox: {
+    marginRight: 10,
+  },
+  agreeText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  termsText: {
+    fontSize: 14,
+    color: '#1e90ff',
+  },
+  button: {
+    backgroundColor: '#00bfff',
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '100%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+});
+
+export default Screen_02;
